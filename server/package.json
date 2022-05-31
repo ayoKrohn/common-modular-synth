@@ -1,0 +1,29 @@
+{
+  "name": "common-modular-synth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "cross-env PORT=3000 nodemon app.js",
+    "start-prod": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayoKrohn/common-modular-synth.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ayoKrohn/common-modular-synth/issues"
+  },
+  "homepage": "https://github.com/ayoKrohn/common-modular-synth#readme",
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "socket.io": "^4.5.1"
+  }
+}
