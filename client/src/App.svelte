@@ -1,8 +1,6 @@
+
 <script>
-	import Modular from "./components/ modular/Modular.svelte";
+	import PianoSynth from "./components/pianoSynth/PianoSynth.svelte";
 </script>
 
-<main>
-	<Modular/>
-</main>
-
+<PianoSynth/>
