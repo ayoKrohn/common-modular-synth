@@ -1,1 +1,1 @@
-# common-modular-synth
+# common-synth
