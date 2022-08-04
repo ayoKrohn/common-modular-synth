@@ -68,9 +68,22 @@ export default {
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
-		production && terser()
+		production && terser(),
+
+		/*{external: [
+			'$app/env'
+		],
+		output: {
+			globals: {
+				'$app/env': 'env'	
+			},
+		
+		}
+	
+	}*/
 	],
 	watch: {
 		clearScreen: false
 	}
+
 };

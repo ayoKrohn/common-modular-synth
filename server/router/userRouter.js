@@ -8,11 +8,12 @@ const router = Router();
 
 // -- LOGIN
 router.post("/api/users/login", async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password } = req.body.loginData;
 
-    if (!(email && password)) {
-        return res.status(400).send("Both email and password are required");
-    }
+    /*if (!(email && password)) {
+        res.status(400).send("Both email and password are required");
+        return;
+    }*/
 
     //const hashedPassword = await bcrypt.hash(password, saltRounds);
 
@@ -24,18 +25,18 @@ router.post("/api/users/login", async (req, res) => {
         if (comparedPassword && !req.session.loggedIn) { 
         req.session.loggedIn = true;
         req.session.email = foundUser.email;
-        return res.status(200).send(req.session.loggedIn);
+        res.status(200).send(foundUser);
+        return;
         }
 
         else if (req.session.loggedIn) {
-        return res.send("You are already logged in!");
+        res.status(406).send(foundUser);
         }
     }
 
     catch {
-        return res.status(404).send("Incorrect email or password!")
+        return res.status(404).send("FAAAAAIL")
     }
-
 });
 
 // -- SIGNUP 
@@ -65,13 +66,28 @@ router.post("/api/users/signup", async (req, res) => {
 });
 
 // -- LOGOUT
-router.post("/api/users/logout", (req, res) =>{
+router.delete('/api/users/logout', (req, res) => {
+if (req.session) {
+    req.session.destroy(err => {
+      if (err) {
+        res.status(400).send('Unable to log out')
+      } else {
+        res.send('Logout successful')
+      }
+    });
+  } else {
+    res.end()
+  }
+})
+
+
+/*router.post("/api/users/logout", (req, res) =>{
     
     if (req.session.loggedIn) { 
         req.session.loggedIn = false;
     }   
     return res.send("User is logged out");
-});
+});*/
 
 router.get("/api/users/status", (req, res) => {
     if (req.session.loggedIn) {

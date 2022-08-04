@@ -1,5 +1,8 @@
 import { readable } from "svelte/store";
 import { writable } from "svelte/store";
+//import { browser, dev, prerendering } from '$app/env';
+
+//let persistedUser = browser && localStorage.getItem('user')
 
 export const synthURL = "http://localhost:3000/api/synths";
 
@@ -7,14 +10,14 @@ export const loginURL = "http://localhost:3000/api/users/login";
 
 export const signupURL = "http://localhost:3000/api/users/signup";
 
-//vi henter en bruger i db 
-export const fetchUser = async (userData) => {
+//Send bruger data - både login og signup  
+/*export const fetchUser = async (userData) => {
     const options = makeOptions("POST", userData);
     const res = await fetch(loginURL, options);
-   // const user = await res.json()
-    //console.log(user);
+    const user = await res.json()
+    console.log(user);
     return res;
-    }
+    } */
 
     /*if (res.ok) {
         console.log(res);
@@ -29,29 +32,24 @@ export const fetchUser = async (userData) => {
             },
           }); */
 
-//generisk metode der indsætter options
-export const makeOptions = (method, body) => {
+
+  export const makeOptions = (method, body) => {
     const opt = {
-    method: method,
-    mode: "cors", //tillader cors
-    credentials: "include", //læs op    
+    method: method,   
     headers: {
-        "content-type": "application/json",
-        "Accept": "application/json"
+        "Content-type": "application/json",
       },
     };
     if (body) { //hvis der er en body som i post kald, sender vi body med
-        opt.body = JSON.stringify(body);
-        // console.log(opt.body);
+        opt.body = JSON.stringify({body});    
     } 
     return opt;
-} 
-
+  } 
 
     export const amountOfItems = writable(0);
 
     export const cartItems = writable([]);
 
-    export const loggedInUser = writable(null);
+    export const isLoggedIn = writable(null);
 
 

@@ -3,6 +3,12 @@ const app = express();
 
 app.use(express.json());
 
+import cors from "cors"
+app.use(cors());
+
+import helmet from "helmet";
+app.use(helmet());
+
 app.use(express.urlencoded({extended: true}));
 
 import path from "path";
