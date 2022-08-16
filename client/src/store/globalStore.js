@@ -1,14 +1,14 @@
 import { readable } from "svelte/store";
 import { writable } from "svelte/store";
-//import { browser, dev, prerendering } from '$app/env';
-
-//let persistedUser = browser && localStorage.getItem('user')
 
 export const synthURL = "http://localhost:3000/api/synths";
 
 export const loginURL = "http://localhost:3000/api/users/login";
 
 export const signupURL = "http://localhost:3000/api/users/signup";
+
+export const statusURL = "http://localhost:3000/api/users/status";
+
 
 //Send bruger data - både login og signup  
 /*export const fetchUser = async (userData) => {
@@ -50,6 +50,12 @@ export const signupURL = "http://localhost:3000/api/users/signup";
 
     export const cartItems = writable([]);
 
-    export const isLoggedIn = writable(null);
+    export const isInRoom = writable(null);
+
+    export const roomname = writable("");
+
+    export const username = writable("");
+
+    export const loggedInUser = writable("");
 
 

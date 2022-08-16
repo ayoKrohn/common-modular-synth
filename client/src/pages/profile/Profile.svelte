@@ -1,1 +1,6 @@
-<h1>Hej jeg er profil</h1>
+<script>
+    import { loggedInUser } from "../../store/globalStore.js";
+
+
+</script>
+<h1> Welcome {$loggedInUser} </h1>

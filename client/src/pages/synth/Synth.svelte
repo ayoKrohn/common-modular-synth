@@ -1,11 +1,22 @@
 <script>
 	import PianoSynth from "../../components/pianoSynth/PianoSynth.svelte";
-	import Stepsequencer from "../../components/stepsequence/Stepsequencer.svelte";
-</script>
+	import Chat from "../../components/chat/Chat.svelte";
+	//vi sender en prop ned igennem til PianoSynth
+	export let socket;
 
-<h1>Hej Jeg er SYNTHSIDEN</h1>
-<PianoSynth/>
-<!--
-<h1>Step Sequencer</h1>
-<Stepsequencer/>
--->
+
+</script>
+<div class="pianosynth">
+<PianoSynth {socket}/>
+</div>
+<div class="chat">
+<Chat {socket}/>
+</div>
+
+<style>
+	.pianosynth {
+		margin-top: 20px;
+		margin-bottom: 100px;
+	}
+</style>
+

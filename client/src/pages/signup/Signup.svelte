@@ -1,7 +1,7 @@
 <script>
 import { signupURL  } from "../../store/globalStore.js";
 
-let newUser = {};
+let email, password;
 
 async function signup() {
     const res = await fetch(signupURL, {
@@ -9,19 +9,24 @@ async function signup() {
         "content-type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify(newUser),
+      body: JSON.stringify({email, password})
     });
+    if (res.ok) {
+      console.log("juhuuu")
+    } else {
+      console.log("something went wrong")
+    }
 }
 
 </script>
 <div class="signup">
     <h1>Signup</h1>
-    <form>
+    <form on:submit|preventDefault={signup}>
     <label for="email">Email</label>
-    <input type="text" placeholder="Email" name="email" bind:value={newUser.email}>
+    <input type="text" placeholder="Email" name="email" bind:value={email}>
         
     <label for="password">Password</label>
-    <input type="password" placeholder="password" name="password" bind:value={newUser.password}>
-    <button type="submit" on:click={signup}>Sign Up</button>
+    <input type="password" placeholder="password" name="password" bind:value={password}>
+    <button type="submit">Sign Up</button>
     </form>
     </div>

@@ -1,34 +1,43 @@
 <script>
   import { useNavigate, useLocation } from "svelte-navigator";
-  import { loginURL, isLoggedIn, makeOptions } from "../../store/globalStore.js";
-  //import { toast } from "@zerodevx/svelte-toast";
+  import { loginURL, makeOptions, loggedInUser } from "../../store/globalStore.js";
+  import { toast } from "@zerodevx/svelte-toast";
   
   const navigate = useNavigate();
   const location = useLocation();
   
-  let loginData= {};
+  let email, password;
+  
 
   async function login(){
-    const info = await fetch(loginURL, {
+    console.log("yo")
+    console.log(email, password)
+    const res = await fetch(loginURL, {
       headers: {
         "content-type": "application/json"
       },
       method: "POST",
-      body: JSON.stringify({loginData})
+      body: JSON.stringify({email, password})
     });
-    console.log("heeeej0");
-    const responseMessage = await info.json();
-    console.log("heeeej2");
-    
-    if(info.ok){
-      console.log(responseMessage);
-      localStorage.setItem("user", JSON.stringify(responseMessage));
 
+    if(res.ok){
+    const data = await res.json();
+    console.log(data);
+      $loggedInUser = data;
+      localStorage.setItem("user", JSON.stringify(data));
       navigate("/profile", { replace: true });
-      return;
-    } else {
-       console.log("error");
-    }};
+      }
+    else {
+      toast.push("User doesnt exist", {
+        theme: {
+          "--toastBackground": "#F56565",
+          "--toastBarBackground": "#C53030",
+        },
+      });
+    }
+  };
+      
+  
   
  /* async function login() {
     const options = makeOptions("POST", loginData);
@@ -62,10 +71,10 @@
 <h1>Login</h1>
 <form on:submit|preventDefault={login}>
 <label for="email">Email</label>
-<input type="text" placeholder="Email" name="email"  bind:value={loginData.email}>
+<input type="text" placeholder="Email" name="email"  bind:value={email}>
 
 <label for="password">Password</label>
-<input type="password" name="password" bind:value={loginData.password}>
+<input type="password" name="password" bind:value={password}>
 <button type="submit">Login</button>
 </form>
 </div>

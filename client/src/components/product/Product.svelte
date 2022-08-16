@@ -16,20 +16,24 @@
             }
       
     </script>
+
+<div class="product">
+    {#each products as product}
     
-    <div class="products">
-        {#each products as product}
-        <tr>
-            <td>{product.productName}</td>
-            <td>Price: {product.price}</td>
-            <td>{product.description}</td>
-            <td><button class="addToCart" on:click={() => addToCart(product)}> Buy </button></td>
-        </tr>
-        {/each}
-    </div>
+        <h3>{product.productName}</h3>
+        <p class="description">{product.description}</p>
+        <p class="price">${product.price}<button class="addToCart" on:click={() => addToCart(product)}> Buy </button></p>
+        <img src={product.image} alt="diy synthesizer kit" style="width:400px;height:300px;" />
+        
+    
+    {/each}
+</div>
+   
     
     <style>
-        * {
-        border : solid 1px pink;
-        }
+       .addToCart {
+        padding: 10px;
+        margin-left: 20px;
+       }
+        
     </style>

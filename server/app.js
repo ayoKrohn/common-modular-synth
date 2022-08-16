@@ -14,9 +14,10 @@ app.use(express.urlencoded({extended: true}));
 import path from "path";
 app.use(express.static(path.resolve("../client/public")));
 
+import "dotenv/config";
 import session from "express-session";
 const sessionMiddleware = session({
-    secret: "cats",//process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true
 });
@@ -39,15 +40,22 @@ const io = new Server(server);
 //en (socket) til hver klient
 io.on("connection", (socket) => {
   console.log(socket.id);
-    socket.on("key-pressed", ({data}) => {
-    io.emit("play-note", {data})
+    socket.on("key-pressed", ({data, roomname}) => {
+    io.to(roomname).emit("play-note", {data})
     });
-    socket.on("key-light", ({data}) => {
-      io.emit("lightup-key", {data})
+    /*socket.on("key-light", ({data, roomname}) => {
+      io.to(roomname).emit("lightup-key", {data})
+    }); */
+    socket.on("turn-off-light", ({data, roomname}) => {
+      io.to(roomname).emit("key-light-off", {data})
     });
-    socket.on("turn-off-light", ({data}) => {
-      io.emit("key-light-off", {data})
-    });
+    socket.on("join", (data) => {
+      console.log(data)
+      socket.join(data.tempRoomname);  
+    })
+    socket.on("send-message", (chatObject) => {
+      io.to(chatObject.roomname).emit("new-message", chatObject);
+    })
   });
 
 const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
